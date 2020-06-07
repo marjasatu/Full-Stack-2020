@@ -1,0 +1,18 @@
+title Muistiinpanon tallentaminen spa
+
+note over selain:
+Kun käyttäjä painaa "save" -nappia, lähetetään
+käyttäjän kirjoittama muistiinpano palvelimelle.
+end note
+
+selain->palvelin: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+
+note over palvelin:
+Uusi muistiipano tallennetaan palvelimelle
+end note
+
+palvelin-->selain: "message": "note created"
+
+note over selain:
+Päivitetään sivu ja muistiinpano tulee näkyviin listaan
+end note
