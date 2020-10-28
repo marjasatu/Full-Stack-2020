@@ -2,11 +2,15 @@ import React, { useState } from 'react'
 
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', id: 1 }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
   
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [searchField, setSearchField] = useState('')
 
   const addNewName = (event) => {
     event.preventDefault()
@@ -34,9 +38,18 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleChange = (event) => {
+    setSearchField(event.target.value)
+  } 
+
   return (
     <div>
       <h2>Phonebook</h2>
+      filter shown with
+      <input
+        value={searchField}
+        onChange={handleChange} 
+      />
       <form onSubmit={addNewName}>
         <div>
           name: 
@@ -56,8 +69,9 @@ const App = () => {
       </form>
       <h2>Numbers</h2>
       <ul>
-        {persons.map(person =>
-          <li key={person.id}>{person.name} {person.number} </li>
+        {persons
+        .filter(person => person.name.includes(searchField))
+        .map(person => <li key={person.id}>{person.name} {person.number} </li>
         )}
       </ul>
     </div>
