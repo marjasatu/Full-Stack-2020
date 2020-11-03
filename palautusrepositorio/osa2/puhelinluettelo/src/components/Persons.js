@@ -4,9 +4,9 @@ const Persons = (props) => {
     return (
         <ul>
         {props.persons
-        .filter(person => person.name.includes(props.searchField))
-        .map(person => <li key={person.id}>{person.name} {person.number} </li>
-        )}
+            .filter(person => person.name.toUpperCase().includes(props.searchField.toUpperCase()))
+            .map(person => <li key={person.id}>{person.name} {person.number} </li>)
+        }
       </ul>
     )      
 }
