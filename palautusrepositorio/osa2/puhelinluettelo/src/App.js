@@ -27,7 +27,7 @@ const App = () => {
       number: newNumber
     }
     nameExists(newName) 
-    ? alert(`${newName} is already added to phonebook`) 
+    ? updateNumber(person.name, person.number) 
       : personService
           .create (person)
           .then(personlist => {
@@ -35,6 +35,18 @@ const App = () => {
           })
     setNewName('')
     setNewNumber('')   
+  }
+
+  const updateNumber = (name, number) => {
+    if (window.confirm(`${name} is already added to phonebook, replace the old number with a new one?`)) { 
+      const person = persons.find(person => person.name === name)
+      const changedPerson = { ...person, number: number}  
+      personService
+        .update(person.id, changedPerson)
+        .then(returnedPerson => {
+          setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+        })    
+    }  
   }
 
   const nameExists = (name) => {
@@ -55,8 +67,8 @@ const App = () => {
   } 
 
   const deletePerson = (id) => {
-    const person = persons.filter(person => person.id === id)
-    if (window.confirm(`Delete ${person[0].name}?`)) { 
+    const person = persons.find(person => person.id === id)
+    if (window.confirm(`Delete ${person.name}?`)) { 
       personService
       .remove(id)
       .then(() => {
