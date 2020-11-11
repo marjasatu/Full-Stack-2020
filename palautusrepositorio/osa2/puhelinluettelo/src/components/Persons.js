@@ -6,7 +6,7 @@ const Persons = (props) => {
         <ul>
         {props.persons
             .filter(person => person.name.toUpperCase().includes(props.searchField.toUpperCase()))
-            .map(person => <li key={person.id}>{person.name} {person.number} </li>)
+            .map(person => <li key={person.id}>{person.name} {person.number} <button onClick={() => props.deletePerson(person.id)}>delete</button></li>)
         }
       </ul>
     )      

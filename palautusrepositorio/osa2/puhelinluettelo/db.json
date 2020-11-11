@@ -21,19 +21,9 @@
       "id": 4
     },
     {
-      "name": "Kalle Miettinen",
-      "id": 5,
-      "number": "1234"
-    },
-    {
-      "name": "ville",
-      "id": 6,
-      "number": "3456"
-    },
-    {
       "name": "kalle",
-      "id": 7,
-      "number": "3456"
+      "number": "2345",
+      "id": 5
     }
   ]
 }

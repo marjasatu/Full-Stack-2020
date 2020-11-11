@@ -24,7 +24,6 @@ const App = () => {
     event.preventDefault()
     const person = {
       name: newName,
-      id: persons.length + 1,
       number: newNumber
     }
     nameExists(newName) 
@@ -55,6 +54,18 @@ const App = () => {
     setSearchField(event.target.value)
   } 
 
+  const deletePerson = (id) => {
+    const person = persons.filter(person => person.id === id)
+    if (window.confirm(`Delete ${person[0].name}?`)) { 
+      personService
+      .remove(id)
+      .then(() => {
+        setPersons(persons.filter(person => person.id !== id))
+      })
+    }  
+  }
+
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -70,7 +81,7 @@ const App = () => {
         newName={newName} 
         newNumber={newNumber}/>
       <h2>Numbers</h2>
-      <Persons persons={persons} searchField={searchField}/>
+      <Persons persons={persons} searchField={searchField} deletePerson={deletePerson} />
     </div>
   )
 
