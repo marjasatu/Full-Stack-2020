@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import Filter from './components/Filter'
 import Persons from './components/Persons'
 import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
 import personService from './services/persons'
 
 
@@ -10,6 +11,7 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [searchField, setSearchField] = useState('')
+  const [message, setMessage] = useState("")
 
   useEffect(() => {
     personService
@@ -26,15 +28,16 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    nameExists(newName) 
-    ? updateNumber(person.name, person.number) 
+    nameExists(newName) ? 
+      updateNumber(person.name, person.number) 
       : personService
           .create (person)
-          .then(personlist => {
-            setPersons(persons.concat(personlist))
+          .then(p => {
+            setPersons(persons.concat(p))
           })
     setNewName('')
-    setNewNumber('')   
+    setNewNumber('')
+    setNotification(`Added ${person.name}`)
   }
 
   const updateNumber = (name, number) => {
@@ -45,6 +48,7 @@ const App = () => {
         .update(person.id, changedPerson)
         .then(returnedPerson => {
           setPersons(persons.map(p => p.id !== person.id ? p : returnedPerson))
+          setNotification(`Updated ${person.name}'s number`)
         })    
     }  
   }
@@ -66,6 +70,13 @@ const App = () => {
     setSearchField(event.target.value)
   } 
 
+  const setNotification = (message) => {
+    setMessage(message)
+    setTimeout(() => {          
+      setMessage(null)
+    }, 2000)
+  }
+
   const deletePerson = (id) => {
     const person = persons.find(person => person.id === id)
     if (window.confirm(`Delete ${person.name}?`)) { 
@@ -73,6 +84,7 @@ const App = () => {
       .remove(id)
       .then(() => {
         setPersons(persons.filter(person => person.id !== id))
+        setNotification(`Deleted ${person.name}`)
       })
     }  
   }
@@ -81,6 +93,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       filter shown with:
       <Filter
         searchField={searchField}

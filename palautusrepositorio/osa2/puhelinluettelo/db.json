@@ -22,8 +22,18 @@
     },
     {
       "name": "kalle",
-      "number": "76543",
+      "number": "34567",
       "id": 5
+    },
+    {
+      "name": "leena",
+      "number": "12345",
+      "id": 7
+    },
+    {
+      "name": "ritva",
+      "number": "34567",
+      "id": 8
     }
   ]
 }
